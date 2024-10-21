@@ -811,12 +811,6 @@
         });
 
 
-        // エディターがフォーカスされたときにツールバーを表示
-        quill.root.addEventListener('focus', function() {
-          document.querySelector('.ql-toolbar').style.display = 'block';
-        });
-
-
       
         //Position of Popup
         quill.on('selection-change', (range) => {
