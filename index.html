@@ -783,10 +783,32 @@
         document.querySelector('.ql-toolbar').style.display = 'block';
         });
 
-        // エディターからフォーカスが外れたとき
-        quill.root.addEventListener('blur', function() {
-        document.querySelector('.ql-toolbar').style.display = 'none';
-        }, true);
+        // クリックした場所がツールバーやエディタ内でなければツールバーを非表示にする
+        document.addEventListener('click', function(event) {
+          const toolbar = document.querySelector('.ql-toolbar');
+          const editor = document.querySelector('.ql-editor');
+
+          // クリックした場所がツールバーやエディタ内でない場合、ツールバーを非表示にする
+          if (!toolbar.contains(event.target) && !editor.contains(event.target)) {
+            toolbar.style.display = 'none';
+          } else {
+            toolbar.style.display = 'block';
+          }
+        });
+      
+        quill.getModule('toolbar').addHandler('link', function() {
+            const value = prompt('Enter the link URL');
+            if (value) {
+                quill.format('link', value);  // リンクを挿入
+            }
+        });
+
+
+        // エディターがフォーカスされたときにツールバーを表示
+        quill.root.addEventListener('focus', function() {
+          document.querySelector('.ql-toolbar').style.display = 'block';
+        });
+
 
       
         //Position of Popup
